@@ -8,10 +8,22 @@ public class Usuario
     private string? email = " ";
     private string? contraseña = " ";
 
-    // Propiedades para obtener valores
+
     public string? GetNombre { get => nombre; }
+    public void SetNombre(string? nombre)
+    {
+        this.nombre = nombre;
+    }
     public string? GetEmail { get => email; }
+    public void SetEmail(string email)
+    {
+        this.email = email;
+    }
     public string? GetContraseña { get => contraseña; }
+    public void SetContraseña(string contraseña)
+    {
+        this.contraseña = contraseña;
+    }
 
     public Usuario() { }
 
@@ -115,7 +127,7 @@ public class Usuario
         string? usuario;
         string? contraseña;
         Usuario? usuarioEncontrado = null;
-
+        GestorDeUsuario gestor = new GestorDeUsuario();
         Console.WriteLine("Inicio de seccion");
 
         while(true)
@@ -130,7 +142,7 @@ public class Usuario
 
             if (usuarioEncontrado != null && usuarioEncontrado.GetContraseña == contraseña){
                     Console.WriteLine($"\n¡Bienvenido, {usuarioEncontrado.GetNombre}!\n");
-                    MostrarMenu();  
+                    gestor.MostrarMenu();
                     break;
 
             }else{
