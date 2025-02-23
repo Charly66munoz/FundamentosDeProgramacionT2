@@ -25,21 +25,39 @@ public class Usuario
     public static Usuario CrearUsuario(List<Usuario> usuarios)
     {
         string? nombre;
-        string email;
+        string? email;
         string contraseña;
 
 
 
         // Validación del nombre
+        
+         bool  usuarioExistente;
+        
         do
         {
             Console.Write("Ingrese su nombre: ");
             nombre = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(nombre))
-            {
-                Console.WriteLine(" El nombre no puede estar vacío.");
+            usuarioExistente = false;
+
+            for (int i = 0; i < usuarios.Count ; i++){
+                if (nombre == usuarios[i].GetNombre){
+                usuarioExistente = true;   
+                break;
+            }   
+                
+                
             }
-        } while (string.IsNullOrWhiteSpace(nombre));
+            if (string.IsNullOrWhiteSpace(nombre) )
+            {
+                Console.WriteLine("El nombre no es válido.");
+            }
+            else if (usuarioExistente)
+            {
+                Console.WriteLine("Este nombre ya está registrado. Intente con otro.");
+            }
+
+        } while (string.IsNullOrWhiteSpace(nombre) || usuarioExistente);
 
         // Validación del email
         
@@ -90,5 +108,34 @@ public class Usuario
     foreach (Usuario indice in usuarios){
         Console.WriteLine($"Nombre: {indice.GetNombre}, Email: {indice.GetEmail}");
     }
+    }
+
+    public void IniciarSesion(List<Usuario> usuarios){
+
+        string? usuario;
+        string? contraseña;
+        Usuario? usuarioEncontrado = null;
+
+        Console.WriteLine("Inicio de seccion");
+
+        while(true)
+        {
+            Console.WriteLine("Ingrese su usuario");
+            usuario  = Console.ReadLine();
+
+            Console.WriteLine("Ingrese su contraseña");
+            contraseña  = Console.ReadLine();
+
+            usuarioEncontrado = usuarios.FirstOrDefault(u => u.GetNombre == usuario);
+
+            if (usuarioEncontrado != null && usuarioEncontrado.GetContraseña == contraseña){
+                    Console.WriteLine($"\n¡Bienvenido, {usuarioEncontrado.GetNombre}!\n");
+                    MostrarMenu();  
+                    break;
+
+            }else{
+                Console.WriteLine("Email o contraseña incorrectos. Intente nuevamente.");
+            }
+        }
     }
 }
